@@ -45,8 +45,31 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) { //LISTO
     return mapa ;
 }
 
-void insertTreeMap(TreeMap * tree, void* key, void * value) {
+void insertTreeMap(TreeMap * tree, void* key, void * value) { //LISTO
+    if (tree == NULL) return NULL ;
+    if (searchTreeMap(tree, key) != NULL) return ; //verifica que la clave ya exista
 
+    TreeNode *padre = NULL ;
+    TreeNode *explorador = tree->root ;
+
+    while (explorador != NULL){ //Buscamos la posicion correcta para la insercion
+        padre = explorador ;
+        if (tree->lower_than(key, explorador->pair->key))
+            explorador = explorador->left ; //buscamos por la izquierda
+        else 
+            explorador = explorador->right ; //buscamos por la derecha
+    }
+
+    TreeNode *nodito = createTreeNode(key, value) ; //creacion del nuevo nodo y enlazamiento
+    if (nodito == NULL) return ;
+    nodito->parent = padre ; //enlazamiento del nuevo nodo
+    if (padre == NULL) tree->root = nodito ;
+    else if (tree->lower_than(key, padre->pair->key))
+        padre->left = nodito ; //se enlaza como hijo izquierdo
+    else
+        padre->right = nodito ; //se enlaza como hijo derecho
+    
+    tree->current = nodito ;
 }
 
 TreeNode * minimum(TreeNode * x){
@@ -67,7 +90,7 @@ void eraseTreeMap(TreeMap * tree, void* key){
 
 }
 
-Pair * searchTreeMap(TreeMap * tree, void* key) { //Listo
+Pair * searchTreeMap(TreeMap * tree, void* key) { //LISTO
     if (tree == NULL || tree->root == NULL) return NULL ;
     TreeNode *nodito = tree->root ;
 
