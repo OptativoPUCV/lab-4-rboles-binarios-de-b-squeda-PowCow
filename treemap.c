@@ -72,14 +72,39 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) { //LISTO
     tree->current = nodito ;
 }
 
-TreeNode * minimum(TreeNode * x){
+TreeNode * minimum(TreeNode * x){ //LISTO
     if (x == NULL) return NULL ;
     while (x->left != NULL) //mientras haya un hijo izq. seguimos buscando
         x = x->left ;
     return x ;
 }
 
-void removeNode(TreeMap * tree, TreeNode* node) {
+void removeNode(TreeMap * tree, TreeNode* node) { //LISTO
+    if (tree == NULL || node == NULL) return ;
+
+    TreeNode *padre = node->parent ;
+    if (node->left == NULL && node->right == NULL){ //para Nodo SIN hijos
+        if (padre == NULL) tree->root = NULL ;
+        else if (padre->left == node) padre->left = NULL ;
+        else padre->right = NULL ;
+
+        free(node->pair) ;
+        free(node) ;
+    }
+    else if (node->left == NULL || node->right == NULL){ //para Nodo con UN hijo
+        TreeNode* hijito = (node->left != NULL) ? node->left : node->right ; //corroborar si el nodo esta a la izquierda o la derecha
+        hijito->parent = padre ;
+
+        if (padre == NULL) tree->root = hijito ;
+        else if (padre->left == node) padre->left = hijito ;
+        else padre->right = hijito ;
+    }
+    else { //para Nodo con DOS hijos
+        TreeNode* siguiente = minimum(node->right) ;
+        free(node->pair) ;
+        node->pair = siguiente->pair ;
+        removeNode(tree, siguiente) ;
+    }
 
 }
 
