@@ -18,3 +18,15 @@ treemap.c:86:1: error: control reaches end of non-void function [-Werror=return-
  ^
 cc1.exe: all warnings being treated as errors
 8a00edc
+Sat, May  3, 2025  2:50:24 PM: 
+Compilation failed
+In file included from test.c:4:0:
+treemap.c: In function 'searchTreeMap':
+treemap.c:85:5: error: expected ';' before 'return'
+     return NULL ;
+     ^~~~~~
+treemap.c:86:1: error: control reaches end of non-void function [-Werror=return-type]
+ }
+ ^
+cc1.exe: all warnings being treated as errors
+b8c399e
