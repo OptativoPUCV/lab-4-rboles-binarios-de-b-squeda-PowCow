@@ -81,7 +81,7 @@ Pair * searchTreeMap(TreeMap * tree, void* key) { //Listo
             nodito = nodito->right ;
     }
     //si no se encuentra la clave
-    tree->current = NULL
+    tree->current = NULL ;
     return NULL ;
 }
 
