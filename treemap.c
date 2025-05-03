@@ -46,7 +46,7 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) { //LISTO
 }
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) { //LISTO
-    if (tree == NULL) return NULL ;
+    if (tree == NULL) return ;
     if (searchTreeMap(tree, key) != NULL) return ; //verifica que la clave ya exista
 
     TreeNode *padre = NULL ;
