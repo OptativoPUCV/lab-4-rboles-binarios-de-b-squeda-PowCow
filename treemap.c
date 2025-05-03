@@ -25,7 +25,6 @@ int is_equal(TreeMap* tree, void* key1, void* key2){
     else return 0;
 }
 
-
 TreeNode * createTreeNode(void* key, void * value) {
     TreeNode * new = (TreeNode *)malloc(sizeof(TreeNode));
     if (new == NULL) return NULL;
@@ -36,7 +35,7 @@ TreeNode * createTreeNode(void* key, void * value) {
     return new;
 }
 
-TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
+TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) { //LISTO
     TreeMap *mapa = (TreeMap *)malloc(sizeof(TreeMap)) ;
     if (mapa == NULL) return NULL ;
 
@@ -46,7 +45,6 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
     return mapa ;
 }
 
-
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
 
 }
@@ -55,7 +53,6 @@ TreeNode * minimum(TreeNode * x){
 
     return NULL;
 }
-
 
 void removeNode(TreeMap * tree, TreeNode* node) {
 
@@ -70,13 +67,23 @@ void eraseTreeMap(TreeMap * tree, void* key){
 
 }
 
+Pair * searchTreeMap(TreeMap * tree, void* key) { //Listo
+    if (tree == NULL || tree->root == NULL) return NULL ;
+    TreeNode *nodito = tree->root ;
 
-
-
-Pair * searchTreeMap(TreeMap * tree, void* key) {
-    return NULL;
+    while (nodito != NULL){
+        if (is_equal(tree, key, nodito->pair->key)){ //se busca el nodo que tenga la clave buscada
+            tree->current = nodito ;
+            return nodito->pair ;}
+        if (tree->lower_than(key, nodito->pair->key))
+            nodito = nodito->left ; //si la clave es menor se busca en el sub-arbol izquierda
+        else //si es mayor, en el sub-arbol derecho
+            nodito = nodito->right ;
+    }
+    //si no se encuentra la clave
+    tree->current = NULL
+    return NULL ;
 }
-
 
 Pair * upperBound(TreeMap * tree, void* key) {
     return NULL;
